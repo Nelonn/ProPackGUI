@@ -12,7 +12,7 @@ public class ProPackGUIPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        getCommand("propackgui").setExecutor(new ProPackGUICommand());
+        new ProPackGUICommand().register(this);
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
