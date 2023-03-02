@@ -5,4 +5,5 @@ author: Nelonn
 api-version: 1.17
 
 commands:
-  propackgui: {}
+  propackgui:
+    permission: propackgui.use

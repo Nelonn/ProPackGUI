@@ -16,7 +16,7 @@ public class ProPackGUICommand implements CommandExecutor {
     }
 
     private void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-        if (sender.hasPermission("propackgui.open")) {
+        if (sender.hasPermission("propackgui.use")) {
             sender.sendMessage(ChatColor.RED + "No permission");
             return;
         }
