@@ -3,7 +3,4 @@ main: me.nelonn.propack.bukkitgui.ProPackGUIPlugin
 version: 1.0.0
 author: Nelonn
 api-version: 1.17
-
-commands:
-  propackgui:
-    permission: propackgui.use
+depend: [ProPack]
