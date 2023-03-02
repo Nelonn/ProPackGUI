@@ -148,7 +148,7 @@ public class ProPackGUICommand extends Command {
                 Item targetItem = targetItems.get(i);
                 Material material = Material.matchMaterial(targetItem.getId().toString());
                 ItemStackBuilder itemStack = new ItemStackBuilder(material)
-                        .setLore("&7" + itemModel.getPath(), "&fas" + targetItem.getId());
+                        .setLore("&7" + itemModel.getPath(), "&fas: " + targetItem.getId());
                 inventory.setItem(i, itemStack.getItem());
             }
         }
