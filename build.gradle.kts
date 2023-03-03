@@ -1,9 +1,11 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
-    id("java")
+    `java-library`
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
-group = "me.nelonn.propack"
-version = "0.0.1"
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
 repositories {
     mavenCentral()
@@ -16,6 +18,10 @@ dependencies {
     "implementation"(files("libs/MareLib-0.0.1.jar"))
 }
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+tasks.named<ShadowJar>("shadowJar") {
+    archiveClassifier.set("")
+}
+
+tasks.named("assemble").configure {
+    dependsOn("shadowJar")
 }
