@@ -13,9 +13,9 @@ repositories {
 }
 
 dependencies {
-    "compileOnly"("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
-    "compileOnly"(files("libs/propack-bukkit-0.0.3-SNAPSHOT.jar"))
-    "implementation"(files("libs/MareLib-0.0.1.jar"))
+    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    compileOnly(fileTree("libs/compile"))
+    implementation(fileTree("libs/implement"))
 }
 
 tasks.named<ShadowJar>("shadowJar") {

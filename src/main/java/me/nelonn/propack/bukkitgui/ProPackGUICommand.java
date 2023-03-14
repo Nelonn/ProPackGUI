@@ -1,13 +1,13 @@
 package me.nelonn.propack.bukkitgui;
 
 import de.tr7zw.nbtapi.NBTItem;
+import me.nelonn.flint.path.Identifier;
 import me.nelonn.flint.path.Path;
 import me.nelonn.marelib.item.ItemStackBuilder;
 import me.nelonn.marelib.util.Command;
 import me.nelonn.propack.ResourcePack;
 import me.nelonn.propack.asset.ItemModel;
 import me.nelonn.propack.bukkit.ProPack;
-import me.nelonn.propack.definition.Item;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -30,7 +30,7 @@ public class ProPackGUICommand extends Command {
     @Override
     protected void onCommand(@NotNull CommandSender sender, @NotNull String s, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return;
-        Optional<ResourcePack> resourcePack = ProPack.getDispatcher().getResourcePack(player);
+        Optional<ResourcePack> resourcePack = ProPack.getCore().getDispatcher().getAppliedResourcePack(player);
         if (resourcePack.isEmpty()) {
             sender.sendMessage(ChatColor.RED + "Missing resource pack");
             return;
@@ -73,7 +73,7 @@ public class ProPackGUICommand extends Command {
 
             for (int i = 0; i < itemModels.size(); i++) {
                 ItemModel itemModel = itemModels.get(i);
-                Material material = Material.matchMaterial(itemModel.getTargetItems().stream().findFirst().orElseThrow().getId().toString());
+                Material material = Material.matchMaterial(itemModel.getTargetItems().stream().findFirst().orElseThrow().toString());
                 ItemStackBuilder itemStack = new ItemStackBuilder(material)
                         .setDisplayName(itemModel.getPath().getValue());
                 itemStack.getNBT().setString("CustomModel", itemModel.getPath().toString());
@@ -142,13 +142,13 @@ public class ProPackGUICommand extends Command {
 
             int start = (page - 1) * ((ROWS - 1) * 9);
             int end = page == pages ? itemModel.getTargetItems().size() : page * ((ROWS - 1) * 9);
-            List<Item> targetItems = itemModel.getTargetItems().stream().toList().subList(start, end);
+            List<Identifier> targetItems = itemModel.getTargetItems().stream().toList().subList(start, end);
 
             for (int i = 0; i < targetItems.size(); i++) {
-                Item targetItem = targetItems.get(i);
-                Material material = Material.matchMaterial(targetItem.getId().toString());
+                Identifier targetItemId = targetItems.get(i);
+                Material material = Material.matchMaterial(targetItemId.toString());
                 ItemStackBuilder itemStack = new ItemStackBuilder(material)
-                        .setLore("&7" + itemModel.getPath(), "&fas: " + targetItem.getId());
+                        .setLore("&7" + itemModel.getPath(), "&fas: " + targetItemId);
                 inventory.setItem(i, itemStack.getItem());
             }
         }
