@@ -1,5 +1,6 @@
 package me.nelonn.propack.bukkitgui;
 
+import me.nelonn.commandlib.bukkit.BukkitCommands;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -12,7 +13,7 @@ public class ProPackGUIPlugin extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        new ProPackGUICommand().register(this);
+        BukkitCommands.register(this, new ProPackGUICommand());
         Bukkit.getPluginManager().registerEvents(this, this);
     }
 
