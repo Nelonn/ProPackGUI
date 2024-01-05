@@ -24,8 +24,8 @@ public class ProPackGUIPlugin extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if (event.getInventory().getHolder() instanceof GUI gui) {
-            gui.onClick(event);
+        if (event.getInventory().getHolder() instanceof CUI cui) {
+            cui.onClick(event);
         }
     }
 }

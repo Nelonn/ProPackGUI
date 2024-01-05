@@ -3,7 +3,7 @@ package me.nelonn.propack.bukkitgui;
 import de.tr7zw.changeme.nbtapi.NBTItem;
 import me.nelonn.commandlib.Command;
 import me.nelonn.commandlib.CommandContext;
-import me.nelonn.flint.path.Identifier;
+import me.nelonn.flint.path.Key;
 import me.nelonn.flint.path.Path;
 import me.nelonn.propack.ResourcePack;
 import me.nelonn.propack.asset.ItemModel;
@@ -39,7 +39,7 @@ public class ProPackGUICommand extends Command<CommandSender> {
         return true;
     }
 
-    private static final class ListGUI implements GUI {
+    private static final class ListGUI implements CUI {
         private static final int ROWS = 6;
         private final ResourcePack resourcePack;
         private final Inventory inventory;
@@ -76,8 +76,8 @@ public class ProPackGUICommand extends Command<CommandSender> {
                 ItemModel itemModel = itemModels.get(i);
                 Material material = Material.matchMaterial(itemModel.getTargetItems().stream().findFirst().orElseThrow().toString());
                 ItemStackBuilder itemStack = new ItemStackBuilder(material)
-                        .setDisplayName(itemModel.friendlyPath().getValue())
-                        .setLore("&7" + itemModel.friendlyPath().getNamespace());
+                        .setDisplayName(itemModel.friendlyPath().value())
+                        .setLore("&7" + itemModel.friendlyPath().namespace());
                 itemStack.getNBT().setString("CustomModel", itemModel.friendlyPath().toString());
                 inventory.setItem(i, itemStack.getItem());
             }
@@ -98,7 +98,7 @@ public class ProPackGUICommand extends Command<CommandSender> {
                 try {
                     NBTItem nbtItem = new NBTItem(event.getCurrentItem());
                     Path path = Path.of(nbtItem.getString("CustomModel"));
-                    ItemModel itemModel = resourcePack.resources().itemModel$(path);
+                    ItemModel itemModel = resourcePack.resources().itemModel(path);
                     event.getWhoClicked().openInventory(new GiveModelGUI(itemModel).getInventory());
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -112,7 +112,7 @@ public class ProPackGUICommand extends Command<CommandSender> {
         }
     }
 
-    private static final class GiveModelGUI implements GUI {
+    private static final class GiveModelGUI implements CUI {
         private static final int ROWS = 6;
         private final ItemModel itemModel;
         private final Inventory inventory;
@@ -143,10 +143,10 @@ public class ProPackGUICommand extends Command<CommandSender> {
 
             int start = (page - 1) * ((ROWS - 1) * 9);
             int end = page == pages ? itemModel.getTargetItems().size() : page * ((ROWS - 1) * 9);
-            List<Identifier> targetItems = itemModel.getTargetItems().stream().toList().subList(start, end);
+            List<Key> targetItems = itemModel.getTargetItems().stream().toList().subList(start, end);
 
             for (int i = 0; i < targetItems.size(); i++) {
-                Identifier targetItemId = targetItems.get(i);
+                Key targetItemId = targetItems.get(i);
                 Material material = Material.matchMaterial(targetItemId.toString());
                 ItemStackBuilder itemStack = new ItemStackBuilder(material)
                         .setLore("&7" + itemModel.friendlyPath(), "&fas: " + targetItemId);

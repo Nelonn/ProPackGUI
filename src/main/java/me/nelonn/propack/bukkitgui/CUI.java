@@ -4,6 +4,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.jetbrains.annotations.NotNull;
 
-public interface GUI extends InventoryHolder {
+public interface CUI extends InventoryHolder {
     void onClick(@NotNull InventoryClickEvent event);
 }
