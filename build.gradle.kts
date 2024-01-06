@@ -17,7 +17,18 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     compileOnly(fileTree("libs/compile"))
     implementation(fileTree("libs/implement"))
-    implementation("de.tr7zw:item-nbt-api:2.12.0")
+    implementation("de.tr7zw:item-nbt-api:2.12.2")
+}
+
+tasks.named<JavaCompile>("compileJava") {
+    options.encoding = "UTF-8"
+}
+
+tasks.named<Copy>("processResources") {
+    filteringCharset = "UTF-8"
+    filesMatching("plugin.yml") {
+        expand("version" to version)
+    }
 }
 
 tasks.named<ShadowJar>("shadowJar") {

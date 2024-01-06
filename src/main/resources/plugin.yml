@@ -1,6 +1,6 @@
 name: ProPackGUI
 main: me.nelonn.propack.bukkitgui.ProPackGUIPlugin
-version: 1.0.0
+version: '${version}'
 author: Nelonn
 api-version: 1.17
 depend: [ProPack]
